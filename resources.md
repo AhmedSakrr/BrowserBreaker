@@ -9,6 +9,7 @@
 
 - [Offcial Windows Build of Chromium](https://chromium.googlesource.com/chromium/src/+/master/docs/windows_build_instructions.md)
 - [Offcial V8 Build from scratch](https://v8.dev/docs/build)
+- [Chrome Build CSV Viewer](https://omahaproxy.appspot.com/)
 
 ### Attack Route(For beginners like me)
 

